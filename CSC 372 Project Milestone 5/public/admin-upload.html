@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulk Upload</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <header>
+        <ul class="navbar">
+            <li class="flex-nav"><a href="admin-products.html">Admin Products</a></li>
+            <li class="flex-nav"><a href="admin-upload.html">Admin Bulk Add</a></li>
+            <li class="flex-nav"><a href="index.html">Home</a></li>
+    
+        </ul>
+
+        <h1>Admin Bulk add</h1>
+    </header>
+
+    <main>
+        <p id="example-json">
+            Json format: 
+            <br>
+            {
+                <br>
+                "Product_Name" : "New GPU",
+                <br>
+                "Price" : "499.99",
+                <br>
+                "Item_Type" : "GPU",
+                <br>
+                "Description" : "This is a GPU",
+                <br>
+                "Image_Path" : "image/good-photo.jpg" 
+                <br>
+            }
+            <br>
+            {
+                <br>
+                "Product_Name" : "Another GPU",
+                <br>
+                "Price" : "699.99",
+                <br>
+                "Item_Type" : "GPU",
+                <br>
+                "Description" : "This is also a GPU",
+                <br>
+                "Image_Path" : "image/good-photo2.jpg"
+                <br>
+            }
+
+        </p>
+
+
+        <div class="search-bar">
+            <p>Input item file below:</p>
+
+            <form action="admin-products.html">
+                <input type="file">
+                <input type="submit" value="submit">
+    
+            </form>
+
+        </div>
+
+
+
+
+
+    </main>
+
+
+
+
+    <footer>
+
+
+        Copyright 2025 GPU <br>
+        A Justin Production <br>
+        All rights reserved
+
+
+    </footer>
+
+
+</body>
+
+</html>
