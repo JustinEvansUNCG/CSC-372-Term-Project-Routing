@@ -6,8 +6,27 @@ From here you can see all routes on cartRoutes.js and productRoutes.js to see al
 
 
 If for some reason some package isn't installed by default, you would first need to run some of the following commands:
+
+
+
+
 npm install multer
+
+
+
+
 nmp install express
+
+
+
+
 npm install sqlite
+
+
+
 npm install sqlite3
+
+
+
+
 npm install better-sqlite3
