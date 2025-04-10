@@ -1,5 +1,8 @@
 How to run:
 To run, use the following command in gitbash
+
+
+
 node server.js
 
 From here you can see all routes on cartRoutes.js and productRoutes.js to see all routes and how to query each route in thunderclient
