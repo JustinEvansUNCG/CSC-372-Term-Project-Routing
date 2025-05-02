@@ -31,6 +31,13 @@ router.get("/", productController.getByAttributes);
 router.post("/add", productController.createProduct);
 
 
+//Request: http://localhost:3000/products/remove
+// Body:
+// {
+//     "product_id": 1
+// }
+router.post("/remove", productController.deleteProduct);
+
 
 //Request: http://localhost:3000/products/update
 // Body:
@@ -42,7 +49,7 @@ router.post("/add", productController.createProduct);
 //     "price": 5.99,
 //     "product_type": 1
 // }
-router.put("/update", productController.updateProduct);
+router.post("/update", productController.updateProduct);
 
 
 //Request: http://localhost:3000/products/bulk/add

@@ -27,8 +27,17 @@ function getProductDetails(req, res, next) {
 function getByAttributes(req, res, next) {
     const type = req.query.type;
     const name = req.query.name;
+    const product_id = req.query.product_id;
 
-    if (type && name) {
+    if (product_id) {
+    try {
+        res.json(model.getById(product_id));
+    } catch (err) {
+        console.error("Error while getting products: ", err.message);
+        next(err);
+    }
+
+    } else if (type && name) {
         try {
             res.json(model.getByTypeAndName(type, name));
         } catch (err) {
@@ -117,6 +126,27 @@ function createProduct(req, res, next) {
     }
 }
 
+
+function deleteProduct(req, res, next) {
+    let product_id = Number(req.body.product_id);
+
+    if (product_id) {
+        let params = [product_id];
+        try {
+            res.json(model.removeProduct(params));
+        } catch (err) {
+            console.error("Error while creating product: ", err.message);
+            next(err);
+        }
+    }
+    else {
+        res.status(400).send("Invalid Request");
+    }
+
+
+}
+
+
 function updateProduct(req, res, next) {
     let product_id = req.body.product_id;
     let name = req.body.name;
@@ -124,6 +154,13 @@ function updateProduct(req, res, next) {
     let image_url = req.body.image_url;
     let price = Number(req.body.price);
     let product_type = Number(req.body.product_type);
+
+    console.log(product_id);
+    console.log(name);
+    console.log(product_id);
+    console.log(product_id);
+    console.log(product_id);
+    console.log(product_id);
 
 
     if (product_id && name && description && image_url && price && product_type) {
@@ -218,6 +255,7 @@ module.exports = {
     getProductDetails,
     createProductsInBulk,
     createProduct,
+    deleteProduct,
     updateProduct,
     initializeDb,
     getAllByOneAttribute,

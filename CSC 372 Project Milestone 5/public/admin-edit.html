@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Edit</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="scripts/admin_edit.js" defer></script>
 </head>
 
 <body>
@@ -33,36 +34,38 @@
                 <img class="flex-img-cart" src="images/RTX4070Sup.webp" alt="GeForce_RTX_4070_Sup">
 
 
-                <div id="flex-edit-fields">
+                <form id="flex-edit-fields" action="admin-products.html" method="post">
 
 
 
                     <div class="edit-field">
                         <p>Product Name: </p>
-                        <input type="text" value="RTX 4070 Super">
+                        <input type="text" name="name" id="product-name" value="">
                     </div>
 
                     <div class="edit-field">
                         <p>Price: </p>
-                        <input type="text" value="499">
+                        <input type="text" name="price" id="product-price" value="">
                     </div>
                     <div class="edit-field">
                         <p>Item Type: </p>
-                        <input type="text" value="GPU">
+                        <input type="text" name="product_type" id="product-type" value="">
                     </div>
                     <div class="edit-field">
                         <p>Description: </p>
-                        <input type="text" value="Mid tier GPU">
+                        <input type="text" name="description" id="product-description" value="">
                     </div>
                     <div class="edit-field">
                         <p>Image Path: </p>
-                        <input type="file">
+                        <input type="text" name="image_url" id="product-image">
                     </div>
 
+                    <input type="hidden" name="product_id" id="product-id">
 
-                    
 
-                </div>
+                    <input type="submit" value="Submit">
+
+                </form>
 
 
 

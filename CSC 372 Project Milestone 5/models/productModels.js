@@ -5,26 +5,19 @@ const path = require("path");
 const db = require("./db-conn");
 
 function getAll() {
-    let sql = "SELECT name, image_url, price FROM Products;";
+    let sql = "SELECT name, image_url, price, product_id, product_type, description FROM Products;";
+    const data = db.all(sql);
+    return data;
+}
+function getById(product_id) {
+    let sql = "SELECT name, image_url, price, description, product_type FROM Products WHERE product_id=" + product_id + ";";
     const data = db.all(sql);
     return data;
 }
 
-
-
-
-function getAllByOneAttribute(attribute, value) {
-    const validColumns = getColumnNames();
-    if (validColumns.includes(attribute)) {
-        let sql = "SELECT * FROM Games WHERE " + attribute + " =? ;";
-        const data = db.all(sql, value);
-        return data;
-    }
-}
-
 function getByTypeAndName(type, name) {
 
-    let sql = "SELECT name, image_url, price FROM Products "
+    let sql = "SELECT name, image_url, price, product_id, product_type, description FROM Products "
         + "WHERE name LIKE '%" + name + "%' AND product_type=" + type + ";";
     const data = db.all(sql);
     return data;
@@ -34,7 +27,7 @@ function getByTypeAndName(type, name) {
 
 function getByName(name) {
 
-    let sql = "SELECT name, image_url, price FROM Products "
+    let sql = "SELECT name, image_url, price, product_id, product_type, description FROM Products "
          + "WHERE name LIKE '%" + name + "%';";
     const data = db.all(sql);
     return data;
@@ -44,7 +37,7 @@ function getByName(name) {
 
 function getByType(type) {
 
-    let sql = "SELECT name, image_url, price FROM Products "
+    let sql = "SELECT name, image_url, price, product_id, product_type, description FROM Products "
          + "WHERE product_type=" + type + ";";
     const data = db.all(sql);
     return data;
@@ -67,6 +60,14 @@ function createProduct(params) {
 
     const info = db.run(sql, params);
     return info;
+}
+
+function removeProduct(product_id) {
+    let sql = "DELETE FROM Products" +
+    " WHERE product_id=?;";
+
+const info = db.run(sql, product_id);
+return info;
 }
 
 function updateProduct(params) {
@@ -130,9 +131,10 @@ module.exports = {
     getByType,
     getProductDetails,
     createProduct,
+    removeProduct,
     updateProduct,
     initializeDb,
-    getAllByOneAttribute,
+    getById,
     getOneById,
     deleteGame,
     createNew
