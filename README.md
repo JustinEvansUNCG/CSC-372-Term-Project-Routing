@@ -1,9 +1,35 @@
 How to run:
-Before attempting to run, enter the following commands in your terminal while being in the same folder as server.js
+To run, make sure you are in the same folder as server.js in your terminal, and then use the following command in gitbash
 
-npm install express
+
+
+node server.js
+
+From here you can see all routes on cartRoutes.js and productRoutes.js to see all routes and how to query each route in thunderclient
+
+
+If for some reason some package isn't installed by default, you would first need to run some of the following commands:
+
+
+
+
 npm install multer
-npm install better-sqlite3
+
+
+
+
+nmp install express
+
+
+
+
 npm install sqlite
 
-Once those 
+
+
+npm install sqlite3
+
+
+
+
+npm install better-sqlite3
