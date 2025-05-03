@@ -2,7 +2,9 @@
 const model = require("../models/productModels");
 
 function getAll(req, res, next) {
+    console.log(req.session.userId);
     try {
+        console.log("tuvala" + model.getAll());
         res.json(model.getAll());
     } catch (err) {
         console.error("Error while getting products: ", err.message);
@@ -124,10 +126,14 @@ function createProduct(req, res, next) {
     else {
         res.status(400).send("Invalid Request");
     }
+
+
+    
 }
 
 
 function deleteProduct(req, res, next) {
+    
     let product_id = Number(req.body.product_id);
 
     if (product_id) {
@@ -154,13 +160,6 @@ function updateProduct(req, res, next) {
     let image_url = req.body.image_url;
     let price = Number(req.body.price);
     let product_type = Number(req.body.product_type);
-
-    console.log(product_id);
-    console.log(name);
-    console.log(product_id);
-    console.log(product_id);
-    console.log(product_id);
-    console.log(product_id);
 
 
     if (product_id && name && description && image_url && price && product_type) {

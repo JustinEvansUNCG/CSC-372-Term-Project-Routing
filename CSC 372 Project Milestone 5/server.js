@@ -2,6 +2,7 @@
 const express = require("express");
 const app = express();
 app.get("/home", function (req, res) {
+    console.log(req.session.userId);
     res.send("Hello, World from Express!");
 });
 
@@ -17,13 +18,20 @@ app.use(multer().none());
 
 //auth
 const session = require('express-session');
+const current_session = new session.MemoryStore();
+
+
 app.use(session({
   secret: 'secret_key',
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  store: current_session,
+  cookie: {
+    checkPeriod: 10000000,
+  }
 }));
 
-
+//console.log(session.userID)
 
 const productRoutes = require("./routes/productRoutes");
 const cartRoutes = require("./routes/cartRoutes");
@@ -32,9 +40,10 @@ const { db_close } = require("./models/db-conn");
 
 
 app.use(express.static("public"));
+app.use("/users", userRoutes);
 app.use("/products", productRoutes);
 app.use("/carts", cartRoutes);
-app.use("/users", userRoutes);
+
 
 
 

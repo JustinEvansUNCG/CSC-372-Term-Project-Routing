@@ -11,6 +11,13 @@ const userController = require("../controllers/userController");
 router.post("/create", userController.createUser);
 
 
+router.post("/login", userController.loginUser);
+
+router.get("/login/check", userController.checkLogin);
+
+router.get("/logout", userController.logout);
+
+
 
 
 

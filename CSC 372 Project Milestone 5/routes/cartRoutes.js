@@ -22,7 +22,7 @@ router.post("/add", cartController.addToCart);
 //  "cart_id": 1
 //}
 //
-router.delete("/remove", cartController.removeFromCart);
+router.post("/remove", cartController.removeFromCart);
 
 
 //http://localhost:3000/carts/clear
@@ -30,7 +30,15 @@ router.delete("/remove", cartController.removeFromCart);
 //{
 //    "cart_id": 1
 //}
-router.delete("/clear", cartController.clearCart);
+router.post("/clear", cartController.clearCart);
+
+
+router.get("/getItems", cartController.itemsInCart);
+
+router.post("/create/cart", cartController.createCart);
+
+router.post("/update", cartController.updateCart);
+
 
 
 
