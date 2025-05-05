@@ -19,7 +19,7 @@ async function loginAttempt(event) {
         .then(data => console.log(data))
         .catch(error => console.log(error));
 
-    console.log(form_data.data);
+   // console.log(form_data.data);
 
     window.location.replace("index.html");
 }

@@ -1,10 +1,14 @@
 "use strict";
 const model = require("../models/productModels");
+const fs = require("fs");
+const path = require("path");
+const multer = require('multer');
+
 
 function getAll(req, res, next) {
     console.log(req.session.userId);
     try {
-        console.log("tuvala" + model.getAll());
+        console.log(model.getAll());
         res.json(model.getAll());
     } catch (err) {
         console.error("Error while getting products: ", err.message);
@@ -32,12 +36,12 @@ function getByAttributes(req, res, next) {
     const product_id = req.query.product_id;
 
     if (product_id) {
-    try {
-        res.json(model.getById(product_id));
-    } catch (err) {
-        console.error("Error while getting products: ", err.message);
-        next(err);
-    }
+        try {
+            res.json(model.getById(product_id));
+        } catch (err) {
+            console.error("Error while getting products: ", err.message);
+            next(err);
+        }
 
     } else if (type && name) {
         try {
@@ -65,20 +69,53 @@ function getByAttributes(req, res, next) {
         res.status(400).send("Invalid Request");
     }
 }
-function createProductsInBulk(req, res, next) {
-    const product_count = req.body.length;
-    let info;
+
+async function createProductsInBulk(req, res, next) {
+
+    let files = req.files;
+
+    const submitted_files = files.length;
+    let bulk_text = "";
+    const img_upload_dir = "./public/images/";
+    let item_entries = [];
+
+
+
+
+
+    for (let i = 0; i < submitted_files; i++) {
+
+        if (files[i]["mimetype"] === "text/plain") {
+            bulk_text = files[i].buffer.toString('utf8');
+            item_entries = bulk_text.split("\r\n");
+            //console.log(item_entries);
+
+        } else if (files[i]["mimetype"].includes("image")) {
+            fs.writeFile(path.join(img_upload_dir, files[i]["originalname"]), files[i].buffer, 'utf-8', (err) => {
+                if (err) {
+                    console.error('Error', err);
+                    return;
+                }
+            });
+        }
+    }
+
+
+
+
     let valid = 1;
+    let info = "";
+    for (let i = 0; i < item_entries.length; i++) {
 
-    for (let i = 0; i < product_count; i++) {
+        let item_entry = item_entries[i].split(", ");
 
 
-        let name = req.body[i].name;
-        let description = req.body[i].description;
-        let image_url = req.body[i].image_url;
-        let price = Number(req.body[i].price);
-        let product_type = Number(req.body[i].product_type);
-        
+        let name = item_entry[0];
+        let description = item_entry[1];
+        let image_url = path.join("images/", item_entry[2]);
+        let price = Number(item_entry[3]);
+        let product_type = item_entry[4];
+
 
 
 
@@ -95,9 +132,12 @@ function createProductsInBulk(req, res, next) {
         else {
             res.status(400).send("Invalid Request");
         }
-        
-
     }
+
+
+
+
+
     if (valid === 1) {
         res.json(info);
 
@@ -107,11 +147,27 @@ function createProductsInBulk(req, res, next) {
 
 function createProduct(req, res, next) {
 
+    let image_url = req.body.image_url;
+    const img_upload_dir = "./public/images/";
+    let file = req.files;
+
+    if (file[0]["mimetype"].includes("image")) {
+        image_url = path.join("/images/", file[0]["originalname"]);
+        fs.writeFile(path.join(img_upload_dir, file[0]["originalname"]), file[0].buffer, 'utf-8', (err) => {
+            if (err) {
+                console.error('Error', err);
+                return;
+            }
+
+        });
+    }
+
+
     let name = req.body.name;
     let description = req.body.description;
-    let image_url = req.body.image_url;
+
     let price = Number(req.body.price);
-    let product_type = Number(req.body.product_type);
+    let product_type = req.body.product_type;
 
 
     if (name && description && image_url && price && product_type) {
@@ -128,13 +184,26 @@ function createProduct(req, res, next) {
     }
 
 
-    
+
 }
 
 
 function deleteProduct(req, res, next) {
-    
+
     let product_id = Number(req.body.product_id);
+
+    if (product_id) {
+        let params = [product_id];
+        try {
+            res.json(model.removeProduct(params));
+        } catch (err) {
+            console.error("Error while creating product: ", err.message);
+            next(err);
+        }
+    }
+    else {
+        res.status(400).send("Invalid Request");
+    }
 
     if (product_id) {
         let params = [product_id];
@@ -182,7 +251,7 @@ function initializeDb(req, res, next) {
     } catch (err) {
         console.error("Error while creating product: ", err.message);
         next(err);
-    } 
+    }
 }
 
 

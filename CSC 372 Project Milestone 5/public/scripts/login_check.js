@@ -9,7 +9,7 @@ fetch(`http://localhost:3000/users/login/check`)
         return response.json();
     })
     .then((data) => { // Process the retrieved data
-        console.log(data);
+        //console.log(data);
         if (data["userId"] === null) {
             let item = document.createElement("li");
             item.classList.add("flex-nav");

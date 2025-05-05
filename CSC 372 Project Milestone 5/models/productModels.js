@@ -18,7 +18,7 @@ function getById(product_id) {
 function getByTypeAndName(type, name) {
 
     let sql = "SELECT name, image_url, price, product_id, product_type, description FROM Products "
-        + "WHERE name LIKE '%" + name + "%' AND product_type=" + type + ";";
+        + "WHERE name LIKE '%" + name + "%' AND product_type LIKE '%" + type + "%';";
     const data = db.all(sql);
     return data;
 
@@ -38,7 +38,7 @@ function getByName(name) {
 function getByType(type) {
 
     let sql = "SELECT name, image_url, price, product_id, product_type, description FROM Products "
-         + "WHERE product_type=" + type + ";";
+         + "WHERE product_type LIKE '%" + type + "%';";
     const data = db.all(sql);
     return data;
 

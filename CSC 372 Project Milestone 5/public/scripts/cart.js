@@ -31,12 +31,13 @@ fetch(`http://localhost:3000/carts/getItems`)
 .then((data) => { // Process the retrieved data
     console.log("My Data:", data);
     console.log(data.length);
+    let final_cost = 0;
     for (let i = 0; i < data.length; i++) {
         let item = document.createElement("div");
         item.classList.add("flex-item-cart");
         item.innerHTML = `        
 
-                <img class="flex-img-cart" src="images/RTX4070Sup.webp" alt="GeForce_RTX_4070_Sup">
+                <img class="flex-img-cart" src="` + data[i]["image_url"] + `" alt="">
 
                 <div class="flex-info-cart">
                 <p class="item-name">` + data[i]["name"] + `</p>
@@ -62,7 +63,11 @@ fetch(`http://localhost:3000/carts/getItems`)
                 <button class="remove-btn">Remove</button>
             `;
 
+
         item_list.appendChild(item);
+        final_cost += data[i]["price"] * data[i]["quantity"] ;
+        let this_cost = data[i]["price"];
+        let item_total = document.querySelectorAll(".total")[i];
 
         const current_item = document.querySelectorAll(".flex-item-cart")[i];
         const remove_btn = document.querySelectorAll(".remove-btn")[i];
@@ -79,6 +84,9 @@ fetch(`http://localhost:3000/carts/getItems`)
             })
                 .then(response => response)
                 .then(data => {
+                    
+                    final_cost = final_cost - this_cost;
+                    document.getElementById("cost-header").innerHTML = "Cost: " + final_cost;
                     current_item.remove();
                 })
                 .catch(error => console.log(error));
@@ -110,8 +118,12 @@ fetch(`http://localhost:3000/carts/getItems`)
             })
                 .then(response => response)
                 .then(data => {
-                    const total_cost = document.querySelectorAll(".total")[i];
+                    const total_cost = item_total;
+                    let old_cost = parseInt(total_cost.innerHTML.replace("Total: $", ""));
                     total_cost.innerHTML = `Total: $` + quantity_field.value * price;
+                    final_cost = final_cost - old_cost + quantity_field.value * price;
+                    document.getElementById("cost-header").innerHTML = "Cost: " + final_cost;
+
                 })
                 .catch(error => console.log(error));
 
@@ -122,6 +134,8 @@ fetch(`http://localhost:3000/carts/getItems`)
         }
 
     }
+
+    document.getElementById("cost-header").innerHTML = "Cost: " + final_cost;
 })
 .catch((error) => {
     console.error("Error:", error);

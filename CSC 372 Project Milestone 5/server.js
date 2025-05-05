@@ -11,9 +11,10 @@ app.get("/home", function (req, res) {
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 const multer = require("multer"); // for multipart/form-data
-app.use(multer().none());
+app.use(multer().any());
 
 //const Database = require("better-sqlite3");
+
 
 
 //auth
