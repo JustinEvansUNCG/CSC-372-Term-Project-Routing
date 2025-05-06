@@ -1,23 +1,23 @@
 "use strict";
 
-let cart_btn = document.getElementById("cart-btn");
-cart_btn.addEventListener("click", createCart);
+// let cart_btn = document.getElementById("cart-btn");
+// cart_btn.addEventListener("click", createCart);
 
-async function createCart() {
-    console.log("jfioew");
+// async function createCart() {
+//     console.log("jfioew");
 
 
 
-    const response = await fetch('http://localhost:3000/carts/create/cart', {
-        method: 'POST',
+//     const response = await fetch('http://localhost:3000/carts/create/cart', {
+//         method: 'POST',
 
-    })
-        .then(response => response)
-        .then(data => console.log(data))
-        .catch(error => console.log(error));
+//     })
+//         .then(response => response)
+//         .then(data => console.log(data))
+//         .catch(error => console.log(error));
 
-    //window.location.replace("cart.html");
-}
+//     //window.location.replace("cart.html");
+// }
 
 let item_list = document.getElementById("flex-cart");
 
@@ -67,11 +67,13 @@ fetch(`http://localhost:3000/carts/getItems`)
         item_list.appendChild(item);
         final_cost += data[i]["price"] * data[i]["quantity"] ;
         let this_cost = data[i]["price"];
+        //let this_quantity = data[i]["quantity"];
         let item_total = document.querySelectorAll(".total")[i];
 
         const current_item = document.querySelectorAll(".flex-item-cart")[i];
         const remove_btn = document.querySelectorAll(".remove-btn")[i];
         remove_btn.addEventListener("click", removeItem);
+        const quantity_field = document.querySelectorAll(".quantity")[i];
         
         async function removeItem() {
             const response = await fetch('http://localhost:3000/carts/remove', {
@@ -85,14 +87,14 @@ fetch(`http://localhost:3000/carts/getItems`)
                 .then(response => response)
                 .then(data => {
                     
-                    final_cost = final_cost - this_cost;
+                    final_cost = final_cost - this_cost * quantity_field.value;
                     document.getElementById("cost-header").innerHTML = "Cost: " + final_cost;
                     current_item.remove();
                 })
                 .catch(error => console.log(error));
         }
 
-        const quantity_field = document.querySelectorAll(".quantity")[i];
+        
         console.log(quantity_field.value);
         quantity_field.addEventListener("blur", quantityCheck);
         quantity_field.addEventListener("click", quantityCheck);
