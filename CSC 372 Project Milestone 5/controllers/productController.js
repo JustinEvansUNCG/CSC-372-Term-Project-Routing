@@ -147,7 +147,7 @@ async function createProductsInBulk(req, res, next) {
 
 function createProduct(req, res, next) {
 
-    let image_url = req.body.image_url;
+    let image_url = "";
     const img_upload_dir = "./public/images/";
     let file = req.files;
 
@@ -161,7 +161,7 @@ function createProduct(req, res, next) {
 
         });
     }
-
+    console.log(image_url);
 
     let name = req.body.name;
     let description = req.body.description;
@@ -223,12 +223,28 @@ function deleteProduct(req, res, next) {
 
 
 function updateProduct(req, res, next) {
+
+    let image_url = "";
+    const img_upload_dir = "./public/images/";
+    let file = req.files;
+
+    if (file[0]["mimetype"].includes("image")) {
+        image_url = path.join("/images/", file[0]["originalname"]);
+        fs.writeFile(path.join(img_upload_dir, file[0]["originalname"]), file[0].buffer, 'utf-8', (err) => {
+            if (err) {
+                console.error('Error', err);
+                return;
+            }
+
+        });
+    }
+
+
     let product_id = req.body.product_id;
     let name = req.body.name;
     let description = req.body.description;
-    let image_url = req.body.image_url;
     let price = Number(req.body.price);
-    let product_type = Number(req.body.product_type);
+    let product_type = req.body.product_type;
 
 
     if (product_id && name && description && image_url && price && product_type) {

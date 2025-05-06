@@ -15,7 +15,7 @@ fetch(`http://localhost:3000/products/?product_id=` + params.get("id"))
         document.getElementById("product-name").value = data[0]["name"];
         document.getElementById("product-description").value = data[0]["description"];
         document.getElementById("product-price").value = data[0]["price"];
-        //document.getElementById("product-image").value = data[0]["image_url"];
+        document.querySelector(".flex-img-cart").src = data[0]["image_url"];
         document.getElementById("product-type").value = data[0]["product_type"];
         document.getElementById("product-id").value = params.get("id");
 
