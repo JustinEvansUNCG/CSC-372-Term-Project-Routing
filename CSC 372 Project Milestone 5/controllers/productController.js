@@ -91,8 +91,8 @@ async function createProductsInBulk(req, res, next) {
             //console.log(item_entries);
 
         } else if (files[i]["mimetype"].includes("image")) {
-            fs.writeFile(path.join(img_upload_dir, files[i]["originalname"]), files[i].buffer, 'utf-8', (err) => {
-                if (err) {
+            fs.writeFile(path.join(img_upload_dir, files[i]["originalname"]), files[i].buffer, 'utf-8', (error) => {
+                if (error) {
                     console.error('Error', err);
                     return;
                 }
