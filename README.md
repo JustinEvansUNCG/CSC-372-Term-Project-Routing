@@ -1,7 +1,7 @@
 How to run:
 To run, make sure you are in the same folder as server.js in your terminal, and then use the following command in gitbash
 
-
+Use the initializedb route in thunder client to initialize the db
 
 node server.js
 
